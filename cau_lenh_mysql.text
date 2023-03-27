@@ -1,0 +1,46 @@
+create database product_management;
+use product_management;
+
+CREATE TABLE products (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  description TEXT,
+  quantity INT NOT NULL,
+  category_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+CREATE TABLE categories (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE customers (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  age INT NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  address TEXT,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE orders (
+  id INT NOT NULL AUTO_INCREMENT,
+  order_date DATETIME NOT NULL,
+  customer_id INT NOT NULL,
+  total DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+CREATE TABLE order_items (
+  order_id INT NOT NULL,
+  product_id INT NOT NULL,
+  quantity INT NOT NULL,
+  PRIMARY KEY (order_id, product_id),
+  FOREIGN KEY (order_id) REFERENCES orders(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);
